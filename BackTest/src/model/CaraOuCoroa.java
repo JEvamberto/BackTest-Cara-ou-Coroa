@@ -14,14 +14,17 @@ public class CaraOuCoroa {
     private final int CARA =0;
     private final int COROA =1;
     
-    public int lançarMoeda(){
+    public int lancarMoeda(){
+        double sorteio = Math.random();
         
-        if (Math.random()>0.5) {
+        if (sorteio>0.5) {
             return COROA;
-        }else if (Math.random()<=0.5){
+        }else if (sorteio<=0.5){
         
             return CARA;
         }
+        
+        
         
         
         return -1;

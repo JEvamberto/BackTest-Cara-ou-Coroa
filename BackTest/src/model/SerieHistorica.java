@@ -5,20 +5,37 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jose
  */
 public class SerieHistorica {
     
-    private int serie[][];
+    private ArrayList serie;
     private CaraOuCoroa caraCoroa;
     
-    private void gerarSerie(){
+    public SerieHistorica(int qtdLancamento){
+        caraCoroa = new CaraOuCoroa();
+        serie = new ArrayList();
+        this.gerarSerie(qtdLancamento);
+    }
+    
+    
+    private void gerarSerie(int qtdLancamento){
         
-        
+        for (int i = 0; i < qtdLancamento; i++) {
+            serie.add(caraCoroa.lancarMoeda());
+        }
     
     }
+
+    public ArrayList getSerie() {
+        return serie;
+    }
+
+    
     
     
 }
