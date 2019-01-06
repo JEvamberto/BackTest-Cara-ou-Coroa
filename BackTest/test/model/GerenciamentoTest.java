@@ -17,22 +17,22 @@ import static org.junit.Assert.*;
  * @author jose
  */
 public class GerenciamentoTest {
-    
+
     public GerenciamentoTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -45,8 +45,7 @@ public class GerenciamentoTest {
         System.out.println("verificacao");
         Gerenciamento instance = new Gerenciamento(1000);
         instance.verificacao();
-        
-        
+
     }
-    
+
 }
