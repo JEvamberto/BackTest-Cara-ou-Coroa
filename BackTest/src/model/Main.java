@@ -11,7 +11,7 @@ package model;
  */
 public class Main {
     public static void main(String[] args) {
-        Gerenciamento backTest = new Gerenciamento(1000);
+        Gerenciamento backTest = new Gerenciamento(1000,1000);
         backTest.verificacao();
     }
 }

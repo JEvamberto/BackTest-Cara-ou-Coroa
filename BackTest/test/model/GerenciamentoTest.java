@@ -43,7 +43,7 @@ public class GerenciamentoTest {
     @Test
     public void testVerificacao() {
         System.out.println("verificacao");
-        Gerenciamento instance = new Gerenciamento(1000);
+        Gerenciamento instance = new Gerenciamento(1000,1000);
         instance.verificacao();
 
     }
