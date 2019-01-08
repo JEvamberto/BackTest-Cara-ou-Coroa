@@ -11,11 +11,9 @@ public class Gerenciamento {
     private SerieHistorica serie;
     private String padraoEscolhido;
 
-    public Gerenciamento(int valorBanca, int qtdLancamento) {
+    public Gerenciamento() {
 
-        this.banca = valorBanca;
-
-        this.serie = new SerieHistorica(qtdLancamento);
+        
 
     }
 

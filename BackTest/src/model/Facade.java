@@ -3,12 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package model;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author jose
  */
-public class ViewController {
+public class Facade {
     
+    private ArrayList <Observer> observer = new ArrayList<>();
+    private Gerenciamento gerencia= new Gerenciamento();
 }

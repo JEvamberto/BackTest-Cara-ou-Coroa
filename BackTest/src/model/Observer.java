@@ -10,5 +10,6 @@ package model;
  * @author jose
  */
 public interface Observer {
+    public void update();
     
 }
