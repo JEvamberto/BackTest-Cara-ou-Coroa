@@ -5,14 +5,16 @@
  */
 package controller;
 
+import java.awt.event.ActionEvent;
 import model.Facade;
+import model.Observer;
 import view.View;
 
 /**
  *
  * @author jose
  */
-public class ControllerView {
+public class ControllerView  implements Observer{
 
     private View view;
     private Facade model;
@@ -20,6 +22,22 @@ public class ControllerView {
     public ControllerView(View view, Facade model) {
         this.view=view;
         this.model=model;
+        this.model.attach(this);
+        
+    }
+
+    public void trataEvento(ActionEvent evt) {
+        if (evt.getActionCommand()=="Executar") {
+            
+            this.model.setBanca(Integer.parseInt(this.view.getTxt_Banca().getText()));
+            this.model.setQtdLancamento(Integer.parseInt(this.view.getTxt_Lancamento().getText()));
+            this.model.getGerencia().IniciarVerificação();
+            
+        }
+    }
+
+    @Override
+    public void update() {
         
     }
     

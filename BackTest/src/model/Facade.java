@@ -14,5 +14,47 @@ import java.util.ArrayList;
 public class Facade {
     
     private ArrayList <Observer> observer = new ArrayList<>();
-    private Gerenciamento gerencia= new Gerenciamento();
+    private Gerenciamento gerencia;
+    
+    
+    public Facade(){
+    
+    this.gerencia= new Gerenciamento(this);
+    }
+    public void attach(Observer observer){
+        
+        this.observer.add(observer);
+    }
+    
+    public void dettach(Observer observer){
+        
+        this.observer.remove(observer);
+    }
+    
+    public void notifyall(){
+        
+        for (Observer observer1 : this.observer) {
+            observer1.update();
+        }
+    
+    }
+
+    public Gerenciamento getGerencia() {
+        return gerencia;
+    }
+
+   public void setBanca(int banca){
+       
+       this.gerencia.setBanca(banca);
+       this.notifyall();
+   }
+   
+   public void setQtdLancamento(int qtdLancamento){
+       this.gerencia.setSerie(new SerieHistorica(qtdLancamento));
+   }
+   
+   
+    
+        
+    
 }
