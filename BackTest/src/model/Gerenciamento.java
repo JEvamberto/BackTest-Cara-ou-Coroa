@@ -6,7 +6,7 @@ package model;
  */
 public class Gerenciamento implements Runnable {
 
-    private int banca;
+    private double banca;
     private String tipoGerenciamento;
     private SerieHistorica serie;
     private String padraoEscolhido;
@@ -52,7 +52,7 @@ public class Gerenciamento implements Runnable {
             
             if (count==2) {
                 if (existe) {
-                     this.banca = banca +1;
+                     this.banca = banca +1.9;
                      this.setBanca(banca);
                       // System.out.println("");
                     //System.out.println("Banca :" + banca+" ganhou 1");
@@ -61,7 +61,7 @@ public class Gerenciamento implements Runnable {
                 }
                 else {
 
-                    this.banca = banca - 7;
+                    this.banca = banca - 6.10;
                     this.setBanca(banca);
                      //System.out.println("");
                     //System.out.println("Banca :" + banca+" perdeu 7");
@@ -84,7 +84,8 @@ public class Gerenciamento implements Runnable {
                 break;
             }
         }
-        
+        this.countPerdas=0;
+        this.countVitorias=0;
        // System.out.println("Quantidade de vitórias:"+countVitorias+"\nQuantida de perdas:"+countPerdas);
         //System.out.println("Banca atual:"+banca);
 
@@ -110,11 +111,11 @@ public class Gerenciamento implements Runnable {
     
     
 
-    public int getBanca() {
+    public double getBanca() {
         return banca;
     }
 
-    public void setBanca(int banca) {
+    public void setBanca(double banca) {
         this.banca = banca;
         this.facade.notifyall();
     }

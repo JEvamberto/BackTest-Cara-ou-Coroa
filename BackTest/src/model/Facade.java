@@ -43,7 +43,7 @@ public class Facade {
         return gerencia;
     }
 
-   public void setBanca(int banca){
+   public void setBanca(double banca){
        
        this.gerencia.setBanca(banca);
        this.notifyall();

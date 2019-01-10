@@ -6,6 +6,7 @@
 package view;
 
 import controller.ControllerView;
+import java.text.DecimalFormat;
 import javax.swing.JTextField;
 import model.Facade;
 import model.Observer;
@@ -21,7 +22,7 @@ public class View extends javax.swing.JFrame implements Observer {
      */
     private Facade model;
     private ControllerView controller;
-    
+    DecimalFormat df = new DecimalFormat("0.00");
     public View(Facade model) {
         initComponents();
         
@@ -244,7 +245,8 @@ public class View extends javax.swing.JFrame implements Observer {
     @Override
     public void update() {
         
-        this.labelBanca.setText(String.valueOf(this.model.getGerencia().getBanca()));
+        String banca = df.format(this.model.getGerencia().getBanca());
+        this.labelBanca.setText(banca);
         this.labelQtdVitoria.setText(String.valueOf(this.model.getGerencia().getCountVitorias()));
         this.labelQtdPerdas.setText(String.valueOf(this.model.getGerencia().getCountPerdas()));
         

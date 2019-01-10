@@ -29,7 +29,7 @@ public class ControllerView  implements Observer{
     public void trataEvento(ActionEvent evt) {
         if (evt.getActionCommand()=="Executar") {
             
-            this.model.setBanca(Integer.parseInt(this.view.getTxt_Banca().getText()));
+            this.model.setBanca(Double.parseDouble(this.view.getTxt_Banca().getText()));
             this.model.setQtdLancamento(Integer.parseInt(this.view.getTxt_Lancamento().getText()));
             this.model.getGerencia().IniciarVerificação();
             
