@@ -5,89 +5,140 @@ package model;
  * @author jose
  */
 public class Gerenciamento implements Runnable {
-
-    private double banca;
+    
+    private double bancaTotal;
+    private double banca1;
+    private double banca2;
+   
     private String tipoGerenciamento;
     private SerieHistorica serie;
     private String padraoEscolhido;
     private int bancaMaxima;
     private int bancaMinima;
     private Facade facade;
-    private int countVitorias=0;
-    private int countPerdas=0;
-    private Thread t ;
-  
+    private int countVitorias = 0;
+    private int countPerdas = 0;
+    private Thread t;
+
     Gerenciamento(Facade facade) {
-       this.facade=facade;
-      
+        this.facade = facade;
+
     }
 
-    
-   public void IniciarVerificação(){
-        t= new Thread(this);
-       this.t.start();
-   }
-    
+    public void IniciarVerificação() {
+        t = new Thread(this);
+        this.t.start();
+    }
+
     public void verificacao() {
-        boolean  existe=false;
+        boolean existe = false;
         int padrao = 111;
+        int valor = 0;
+        boolean sabe = false;
         //versão básica
-        int count=0;
-       
+        int count = 0;
+
         for (int i = 0; i < this.serie.getSerie().size(); i++) {
-           
-            if (count<3) {
-                
-                 //System.out.print(this.serie.getSerie().get(i));
+            sabe = false;
+            if (count < 3) {
+                //System.out.println("count:"+count);
+                //System.out.print(this.serie.getSerie().get(i));
+                if (count == 0) {
+
+                    if ((int) this.serie.getSerie().get(i) == 1 /*|| (int) this.serie.getSerie().get(i) == 0*/) {
+
+                        this.bancaTotal = bancaTotal + 1;
+                        this.setBanca(bancaTotal);
+                        //this.bancaTotal = bancaTotal - 1;
+                       // this.setBanca(bancaTotal);
                     
-                if ((int) this.serie.getSerie().get(i) == 1) {
-                    existe=true;
-                    
+
+                        if ((int) this.serie.getSerie().get(i) == 1) {
+                            valor = 0;
+                        } else {
+                            valor = 1;
+                        }
+
+                    }else{
+                        this.bancaTotal=bancaTotal-1;
+                        this.setBanca(bancaTotal);
+                           existe=true;
+                    }
+
                 }
-            
-                
+                /*if ((int) this.serie.getSerie().get(i) == 1) {
+                    existe = true;
+                    
+                }*/
+
+                if (count == 1&& existe == true) {
+
+                    if ((int) this.serie.getSerie().get(i) == 1) {
+
+                        this.bancaTotal = bancaTotal + 2;
+                        this.setBanca(bancaTotal);
+                        sabe = true;
+                        countVitorias++;
+
+                    } else {
+                        this.bancaTotal = bancaTotal - 2;
+                        this.setBanca(bancaTotal);
+                        sabe = false;
+
+                    }
+
+                }
+
+                if (count == 2 && (sabe == false)) {
+
+                    if ((int) this.serie.getSerie().get(i) == 1) {
+
+                        this.bancaTotal = bancaTotal + 4;
+                        this.setBanca(bancaTotal);
+                        countVitorias++;
+
+                    } else {
+                        this.bancaTotal = bancaTotal - 4;
+                        this.setBanca(bancaTotal);
+                        countPerdas++;
+
+                    }
+
+                }
+
                 count++;
             }
-          
-            
-            if (count==2) {
-                if (existe) {
-                     this.banca = banca +1.9;
-                     this.setBanca(banca);
-                      // System.out.println("");
-                    //System.out.println("Banca :" + banca+" ganhou 1");
-                    existe=false;
-                    countVitorias++;
-                }
-                else {
 
-                    this.banca = banca - 6.10;
-                    this.setBanca(banca);
-                     //System.out.println("");
-                    //System.out.println("Banca :" + banca+" perdeu 7");
+            /* if (count == 2) {
+                if (existe) {
+                    this.bancaTotal = bancaTotal + 2;
+                    this.setBanca(bancaTotal);
+                    // System.out.println("");
+                    //System.out.println("Banca :" + bancaTotal+" ganhou 1");
+                    existe = false;
+                    countVitorias++;
+                } else {
+                    
+                    this.bancaTotal = bancaTotal - 6;
+                    this.setBanca(bancaTotal);
+                    //System.out.println("");
+                    //System.out.println("Banca :" + bancaTotal+" perdeu 7");
                     countPerdas++;
                 }
-
+                
+            }*/
+            if (count == 3) {
+                count = 0;
             }
-            
-           
-                
-                
-                
-            
-            
-            if (count ==3) {
-                count=0;
-            }
-            if (banca <= 0) {
+            if (bancaTotal <= 0) {
                 System.out.println("Banca Quebrada");
                 break;
             }
         }
-        this.countPerdas=0;
-        this.countVitorias=0;
-       // System.out.println("Quantidade de vitórias:"+countVitorias+"\nQuantida de perdas:"+countPerdas);
-        //System.out.println("Banca atual:"+banca);
+        this.countPerdas = 0;
+        this.countVitorias = 0;
+        // System.out.println("Quantidade de vitórias:"+countVitorias+"\nQuantida de perdas:"+countPerdas);
+        //System.out.println("Banca atual:"+bancaTotal);
 
     }
 
@@ -108,15 +159,13 @@ public class Gerenciamento implements Runnable {
         this.countPerdas = countPerdas;
         this.facade.notifyall();
     }
-    
-    
 
     public double getBanca() {
-        return banca;
+        return bancaTotal;
     }
 
     public void setBanca(double banca) {
-        this.banca = banca;
+        this.bancaTotal = banca;
         this.facade.notifyall();
     }
 
@@ -164,12 +213,5 @@ public class Gerenciamento implements Runnable {
     public void run() {
         this.verificacao();
     }
-    
-    
-    
-    
-    
+
 }
-
-
-
