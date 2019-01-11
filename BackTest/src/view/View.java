@@ -7,6 +7,7 @@ package view;
 
 import controller.ControllerView;
 import java.text.DecimalFormat;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 import model.Facade;
 import model.Observer;
@@ -22,7 +23,7 @@ public class View extends javax.swing.JFrame implements Observer {
      */
     private Facade model;
     private ControllerView controller;
-    DecimalFormat df = new DecimalFormat("0.00");
+    private DecimalFormat df = new DecimalFormat("0.00");
     public View(Facade model) {
         initComponents();
         
@@ -270,6 +271,22 @@ public class View extends javax.swing.JFrame implements Observer {
         this.txt_Lancamento = txt_Lancamento;
     }
 
+    public JLabel getLb1() {
+        return lb1;
+    }
+
+    public void setLb1(JLabel lb1) {
+        this.lb1 = lb1;
+    }
+
+    public JLabel getLb2() {
+        return lb2;
+    }
+
+    public void setLb2(JLabel lb2) {
+        this.lb2 = lb2;
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -301,7 +318,11 @@ public class View extends javax.swing.JFrame implements Observer {
     public void update() {
         
         String banca = df.format(this.model.getGerencia().getBanca());
+        String banca1=df.format(this.model.getGerencia().getBanca1());
+        String banca2=df.format(this.model.getGerencia().getBanca2());
         this.labelBanca.setText(banca);
+        this.labelBanca1.setText(banca1);
+        this.labelBanca2.setText(banca2);
         this.labelQtdVitoria.setText(String.valueOf(this.model.getGerencia().getCountVitorias()));
         this.labelQtdPerdas.setText(String.valueOf(this.model.getGerencia().getCountPerdas()));
         

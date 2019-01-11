@@ -37,6 +37,7 @@ public class Gerenciamento implements Runnable {
         int valor = 0;
         boolean sabe = false;
         boolean isBanca = false;
+        boolean isPerda=false;
         // false é a banca com padrao 000 e true é a banca com padrão 111
         //versão básica
         int count = 0;
@@ -49,7 +50,7 @@ public class Gerenciamento implements Runnable {
                 if (count == 0) {
 
                     if ((int) this.serie.getSerie().get(i) == 1 || (int) this.serie.getSerie().get(i) == 0) {
-
+                        isPerda=false;
                         //this.bancaTotal = bancaTotal - 1;
                         // this.setBanca(bancaTotal);
                         if ((int) this.serie.getSerie().get(i) == 1) {
@@ -79,6 +80,7 @@ public class Gerenciamento implements Runnable {
                 if (count == 1) {
 
                     if ((int) this.serie.getSerie().get(i) == valor) {
+                        isPerda=false;
                         //-----------
                         if (isBanca == false) {
                             this.banca2 = banca2 + 2;
@@ -91,7 +93,7 @@ public class Gerenciamento implements Runnable {
 
                         sabe = true;
                         countVitorias++;
-
+                        
                     } else {
                         //----------------------------
                            if (isBanca == false) {
@@ -114,8 +116,8 @@ public class Gerenciamento implements Runnable {
 
                 if (count == 2 && (sabe == false)) {
 
-                    if ((int) this.serie.getSerie().get(i) == 1) {
-
+                    if ((int) this.serie.getSerie().get(i) == valor) {
+                            isPerda=false;
                         
                          if (isBanca == false) {
                             this.banca2 = banca2 + 4;
@@ -132,7 +134,7 @@ public class Gerenciamento implements Runnable {
 
                     } else {
                         
-                        
+                        isPerda=true;
                          if (isBanca == false) {
                             this.banca2 = banca2 -4;
                             this.setBanca(banca1+banca2);
@@ -172,6 +174,8 @@ public class Gerenciamento implements Runnable {
                 
             }*/
             if (count == 3) {
+              
+                
                 count = 0;
             }
             if (bancaTotal <= 0) {

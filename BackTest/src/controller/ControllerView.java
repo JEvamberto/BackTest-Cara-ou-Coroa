@@ -6,6 +6,7 @@
 package controller;
 
 import java.awt.event.ActionEvent;
+import java.text.DecimalFormat;
 import model.Facade;
 import model.Observer;
 import view.View;
@@ -18,6 +19,7 @@ public class ControllerView  implements Observer{
 
     private View view;
     private Facade model;
+    private DecimalFormat df = new DecimalFormat("0.00");
     
     public ControllerView(View view, Facade model) {
         this.view=view;
@@ -32,7 +34,10 @@ public class ControllerView  implements Observer{
             this.model.setBanca(Double.parseDouble(this.view.getTxt_Banca().getText()));
             this.model.setQtdLancamento(Integer.parseInt(this.view.getTxt_Lancamento().getText()));
             this.model.getGerencia().IniciarVerificação();
-            
+             String bancaEmDois = df.format((Double.parseDouble(this.view.getTxt_Banca().getText())/2));
+            this.view.getLb1().setText(bancaEmDois);
+            this.view.getLb2().setText(bancaEmDois);
+             
         }
     }
 
