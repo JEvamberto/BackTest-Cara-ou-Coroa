@@ -5,11 +5,11 @@ package model;
  * @author jose
  */
 public class Gerenciamento implements Runnable {
-    
+
     private double bancaTotal;
     private double banca1;
     private double banca2;
-   
+
     private String tipoGerenciamento;
     private SerieHistorica serie;
     private String padraoEscolhido;
@@ -31,10 +31,13 @@ public class Gerenciamento implements Runnable {
     }
 
     public void verificacao() {
+        /*Banca 1 padrão 111 e Banca 2 padrão 000*/
         boolean existe = false;
         int padrao = 111;
         int valor = 0;
         boolean sabe = false;
+        boolean isBanca = false;
+        // false é a banca com padrao 000 e true é a banca com padrão 111
         //versão básica
         int count = 0;
 
@@ -45,24 +48,26 @@ public class Gerenciamento implements Runnable {
                 //System.out.print(this.serie.getSerie().get(i));
                 if (count == 0) {
 
-                    if ((int) this.serie.getSerie().get(i) == 1 /*|| (int) this.serie.getSerie().get(i) == 0*/) {
+                    if ((int) this.serie.getSerie().get(i) == 1 || (int) this.serie.getSerie().get(i) == 0) {
 
-                        this.bancaTotal = bancaTotal + 1;
-                        this.setBanca(bancaTotal);
                         //this.bancaTotal = bancaTotal - 1;
-                       // this.setBanca(bancaTotal);
-                    
-
+                        // this.setBanca(bancaTotal);
                         if ((int) this.serie.getSerie().get(i) == 1) {
+
+                            this.banca1 = banca1 + 1;
+                            this.banca2 = banca2 - 1;
+                            this.setBanca(banca1 + banca2);
+                            isBanca = false;
+
                             valor = 0;
                         } else {
+                            this.banca2 = banca2 + 1;
+                            this.banca1 = banca1 - 1;
+                            this.setBanca(banca1 + banca2);
+                            isBanca = true;
                             valor = 1;
                         }
 
-                    }else{
-                        this.bancaTotal=bancaTotal-1;
-                        this.setBanca(bancaTotal);
-                           existe=true;
                     }
 
                 }
@@ -71,18 +76,36 @@ public class Gerenciamento implements Runnable {
                     
                 }*/
 
-                if (count == 1&& existe == true) {
+                if (count == 1) {
 
-                    if ((int) this.serie.getSerie().get(i) == 1) {
+                    if ((int) this.serie.getSerie().get(i) == valor) {
+                        //-----------
+                        if (isBanca == false) {
+                            this.banca2 = banca2 + 2;
+                            this.setBanca(banca1+banca2);
+                        }else{
+                            
+                            this.banca1 = banca1 + 2;
+                            this.setBanca(banca1+banca2);
+                        }
 
-                        this.bancaTotal = bancaTotal + 2;
-                        this.setBanca(bancaTotal);
                         sabe = true;
                         countVitorias++;
 
                     } else {
-                        this.bancaTotal = bancaTotal - 2;
-                        this.setBanca(bancaTotal);
+                        //----------------------------
+                           if (isBanca == false) {
+                            this.banca2 = banca2 - 2;
+                            this.setBanca(banca1+banca2);
+                        }else{
+                            
+                            this.banca1 = banca1 - 2;
+                            this.setBanca(banca1+banca2);
+                        }
+
+                        
+                        
+                     
                         sabe = false;
 
                     }
@@ -93,13 +116,34 @@ public class Gerenciamento implements Runnable {
 
                     if ((int) this.serie.getSerie().get(i) == 1) {
 
-                        this.bancaTotal = bancaTotal + 4;
-                        this.setBanca(bancaTotal);
+                        
+                         if (isBanca == false) {
+                            this.banca2 = banca2 + 4;
+                            this.setBanca(banca1+banca2);
+                        }else{
+                            
+                            this.banca1 = banca1 + 4;
+                            this.setBanca(banca1+banca2);
+                        }
+
+                        
+                      
                         countVitorias++;
 
                     } else {
-                        this.bancaTotal = bancaTotal - 4;
-                        this.setBanca(bancaTotal);
+                        
+                        
+                         if (isBanca == false) {
+                            this.banca2 = banca2 -4;
+                            this.setBanca(banca1+banca2);
+                        }else{
+                            
+                            this.banca1 = banca1 -4;
+                            this.setBanca(banca1+banca2);
+                        }
+
+                        
+                       
                         countPerdas++;
 
                     }
@@ -140,6 +184,22 @@ public class Gerenciamento implements Runnable {
         // System.out.println("Quantidade de vitórias:"+countVitorias+"\nQuantida de perdas:"+countPerdas);
         //System.out.println("Banca atual:"+bancaTotal);
 
+    }
+
+    public double getBanca1() {
+        return banca1;
+    }
+
+    public void setBanca1(double banca1) {
+        this.banca1 = banca1;
+    }
+
+    public double getBanca2() {
+        return banca2;
+    }
+
+    public void setBanca2(double banca2) {
+        this.banca2 = banca2;
     }
 
     public int getCountVitorias() {
