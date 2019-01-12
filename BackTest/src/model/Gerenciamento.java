@@ -50,7 +50,7 @@ public class Gerenciamento implements Runnable {
                 if (count == 0) {
 
                     if ((int) this.serie.getSerie().get(i) == 1 || (int) this.serie.getSerie().get(i) == 0) {
-                        isPerda=false;
+                      
                         //this.bancaTotal = bancaTotal - 1;
                         // this.setBanca(bancaTotal);
                         if ((int) this.serie.getSerie().get(i) == 1) {
@@ -80,7 +80,7 @@ public class Gerenciamento implements Runnable {
                 if (count == 1) {
 
                     if ((int) this.serie.getSerie().get(i) == valor) {
-                        isPerda=false;
+                   
                         //-----------
                         if (isBanca == false) {
                             this.banca2 = banca2 + 2;
@@ -177,6 +177,16 @@ public class Gerenciamento implements Runnable {
               
                 
                 count = 0;
+            }
+            
+            if (banca1<=30) {
+                banca1=(bancaTotal/2);
+                banca2=(bancaTotal/2);
+            }
+            
+            if (banca2<=30) {
+                banca1=(bancaTotal/2);
+                banca2=(bancaTotal/2);
             }
             if (bancaTotal <= 0) {
                 System.out.println("Banca Quebrada");
