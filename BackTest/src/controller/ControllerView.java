@@ -34,9 +34,8 @@ public class ControllerView  implements Observer{
             this.model.setBanca(Double.parseDouble(this.view.getTxt_Banca().getText()));
             this.model.setQtdLancamento(Integer.parseInt(this.view.getTxt_Lancamento().getText()));
             this.model.getGerencia().IniciarVerificação();
-             String bancaEmDois = df.format((Double.parseDouble(this.view.getTxt_Banca().getText())/2));
-            this.view.getLb1().setText(bancaEmDois);
-            this.view.getLb2().setText(bancaEmDois);
+             
+            
              
         }
     }

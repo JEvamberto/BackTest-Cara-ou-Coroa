@@ -46,8 +46,7 @@ public class Facade {
    public void setBanca(double banca){
        
        this.gerencia.setBanca(banca);
-       this.gerencia.setBanca1((banca/2));
-       this.gerencia.setBanca2((banca/2));
+    
        this.notifyall();
    }
    
