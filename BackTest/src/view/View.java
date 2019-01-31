@@ -8,8 +8,10 @@ package view;
 import controller.ControllerView;
 import java.text.DecimalFormat;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import model.Facade;
+
+import model.Gerenciamento;
 import model.Observer;
 
 /**
@@ -21,10 +23,10 @@ public class View extends javax.swing.JFrame implements Observer {
     /**
      * Creates new form View
      */
-    private Facade model;
+    private Gerenciamento model;
     private ControllerView controller;
     private DecimalFormat df = new DecimalFormat("0.00");
-    public View(Facade model) {
+    public View(Gerenciamento model) {
         initComponents();
         
         this.model=model;
@@ -237,4 +239,10 @@ public class View extends javax.swing.JFrame implements Observer {
         
         
     }
+    
+    public void mostrarMensagem(String mensagem){
+    
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
+    
 }

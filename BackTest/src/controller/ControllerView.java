@@ -7,7 +7,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.text.DecimalFormat;
-import model.Facade;
+
+import model.Gerenciamento;
 import model.Observer;
 import view.View;
 
@@ -18,10 +19,10 @@ import view.View;
 public class ControllerView  implements Observer{
 
     private View view;
-    private Facade model;
+    private Gerenciamento model;
     private DecimalFormat df = new DecimalFormat("0.00");
     
-    public ControllerView(View view, Facade model) {
+    public ControllerView(View view, Gerenciamento model) {
         this.view=view;
         this.model=model;
         this.model.attach(this);
@@ -42,7 +43,11 @@ public class ControllerView  implements Observer{
 
     @Override
     public void update() {
-        
+        if (!model.getResultado()) {
+            
+            this.view.mostrarMensagem("Banca quebrada");
+            this.model.setResultado(true);
+        }
     }
     
 }

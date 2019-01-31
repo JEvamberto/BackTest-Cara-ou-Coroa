@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author jose
@@ -7,27 +9,53 @@ package model;
 public class Gerenciamento implements Runnable {
 
     private double bancaTotal;
-
+      private ArrayList <Observer> observer = new ArrayList<>();
     private String tipoGerenciamento;
     private SerieHistorica serie;
     private String padraoEscolhido;
     private int bancaMaxima;
     private int bancaMinima;
-    private Facade facade;
-    private int countVitorias = 0;
-    private int countPerdas = 0;
+    
+    private int countVitorias=0 ;
+    private int countPerdas=0 ;
     private Thread t;
-
-    Gerenciamento(Facade facade) {
-        this.facade = facade;
-
+    private boolean resultado=true;
+    
+    public void setResultado(boolean resultado){
+        this.resultado=resultado;
+        
+        this.notifyall();
     }
+    public boolean getResultado(){
+        return this.resultado;
+    }
+
+    
+     public void attach(Observer observer){
+        
+        this.observer.add(observer);
+    }
+    
+    public void dettach(Observer observer){
+        
+        this.observer.remove(observer);
+    }
+    
+    
 
     public void IniciarVerificação() {
         t = new Thread(this);
         this.t.start();
     }
-
+    
+    public void notifyall(){
+        
+        for (Observer observer1 : this.observer) {
+            observer1.update();
+        }
+    
+    }
+    
     public void verificacao() {
         /*Banca 1 padrão 111 e Banca 2 padrão 000*/
         boolean existe = false;
@@ -47,16 +75,20 @@ public class Gerenciamento implements Runnable {
                 //System.out.print(this.serie.getSerie().get(i));
                 if (count == 0) {
 
-                    if ((int) this.serie.getSerie().get(i) == 1 || (int) this.serie.getSerie().get(i) == 0) {
+                    if ((int) this.serie.getSerie().get(i) == 1) {
 
                         this.bancaTotal = this.bancaTotal + 1;
                        
 
                         this.setBanca(bancaTotal);
+                       
+                        this.setCountVitorias();
                     } else {
 
                         this.bancaTotal = this.bancaTotal - 1;
                         this.setBanca(bancaTotal);
+                        
+                        this.setCountPerdas();
                         isPerda = true;
 
                     }
@@ -71,14 +103,18 @@ public class Gerenciamento implements Runnable {
                     isPerda = false;
                     if ((int) this.serie.getSerie().get(i) == 1) {
 
-                        this.bancaTotal = this.bancaTotal + 1;
+                        this.bancaTotal = this.bancaTotal + 2;
                         this.setBanca(bancaTotal);
-                        this.countVitorias++;
+                        
+                        this.setCountVitorias();
 
                     } else {
 
-                        this.bancaTotal = this.bancaTotal - 1;
+                        this.bancaTotal = this.bancaTotal - 2;
                         this.setBanca(bancaTotal);
+                        
+                       
+                        this.setCountPerdas();
                         sabe = true;
 
                     }
@@ -91,14 +127,18 @@ public class Gerenciamento implements Runnable {
 
                     if ((int) this.serie.getSerie().get(i) == 1) {
 
-                        this.bancaTotal = this.bancaTotal + 1;
+                        this.bancaTotal = this.bancaTotal + 4;
+                       
+                        this.setCountVitorias();
                         this.setBanca(bancaTotal);
 
                     } else {
 
-                        this.bancaTotal = this.bancaTotal - 1;
+                        this.bancaTotal = this.bancaTotal - 4;
                         this.setBanca(bancaTotal);
-                        this.countPerdas++;
+                      
+                        this.setCountPerdas();
+                      
 
                     }
 
@@ -131,8 +171,11 @@ public class Gerenciamento implements Runnable {
                 count = 0;
             }
             if (bancaTotal <= 0) {
-                System.out.println("Banca Quebrada");
+                
+                this.setResultado(false);
+                
                 break;
+                
             }
         }
         this.countPerdas = 0;
@@ -146,18 +189,18 @@ public class Gerenciamento implements Runnable {
         return countVitorias;
     }
 
-    public void setCountVitorias(int countVitorias) {
-        this.countVitorias = countVitorias;
-        this.facade.notifyall();
+    public void setCountVitorias() {
+        this.countVitorias++;
+        this.notifyall();
     }
 
     public int getCountPerdas() {
         return countPerdas;
     }
 
-    public void setCountPerdas(int countPerdas) {
-        this.countPerdas = countPerdas;
-        this.facade.notifyall();
+    public void setCountPerdas() {
+        this.countPerdas++;
+        this.notifyall();
     }
 
     public double getBanca() {
@@ -166,7 +209,7 @@ public class Gerenciamento implements Runnable {
 
     public void setBanca(double banca) {
         this.bancaTotal = banca;
-        this.facade.notifyall();
+        this.notifyall();
     }
 
     public String getTipoGerenciamento() {
@@ -212,6 +255,16 @@ public class Gerenciamento implements Runnable {
     @Override
     public void run() {
         this.verificacao();
+    }
+    
+    
+   
+   public void setQtdLancamento(int qtdLancamento){
+       this.setSerie(new SerieHistorica(qtdLancamento));
+   }
+   
+    public Gerenciamento getGerencia() {
+        return this;
     }
 
 }
